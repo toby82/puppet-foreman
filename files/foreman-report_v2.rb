@@ -28,7 +28,6 @@ $settings_file = "/etc/puppet/foreman.yaml"
 SETTINGS = YAML.load_file($settings_file)
 
 Puppet::Reports.register_report(:foreman) do
-  Puppet.settings.use(:reporting)
   desc "Sends reports directly to Foreman"
 
   def process
