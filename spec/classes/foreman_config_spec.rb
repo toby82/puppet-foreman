@@ -2,19 +2,10 @@ require 'spec_helper'
 
 
 describe 'foreman::config' do
-  let :default_facts do
-    {
-      :concat_basedir => '/tmp',
-      :interfaces     => '',
-    }
-  end
-
   context 'on redhat' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6.4',
-        :osfamily               => 'RedHat',
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
@@ -253,10 +244,8 @@ describe 'foreman::config' do
 
   context 'on debian' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'Debian',
-        :operatingsystemrelease => 'wheezy',
-        :osfamily               => 'Debian',
+      on_supported_os['debian-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 

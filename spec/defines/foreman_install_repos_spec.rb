@@ -6,9 +6,7 @@ describe 'foreman::install::repos' do
 
   context 'on osfamily debian' do
     let :facts do
-      {
-        :osfamily        => 'Debian',
-      }
+      on_supported_os['debian-7-x86_64']
     end
 
     let(:params) { {:repo => 'stable'} }
@@ -20,11 +18,7 @@ describe 'foreman::install::repos' do
 
   context 'on Fedora' do
     let :facts do
-      {
-        :operatingsystem        => 'Fedora',
-        :operatingsystemrelease => '19',
-        :osfamily               => 'RedHat',
-      }
+      on_supported_os['fedora-19-x86_64']
     end
 
     let(:params) { {:repo => 'stable'} }
@@ -40,11 +34,7 @@ describe 'foreman::install::repos' do
 
   context 'on RedHat' do
     let :facts do
-      {
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6.4',
-        :osfamily               => 'RedHat',
-      }
+      on_supported_os['redhat-6-x86_64']
     end
 
     let(:params) { {:repo => 'stable'} }

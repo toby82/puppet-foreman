@@ -1,13 +1,6 @@
 require 'spec_helper'
 
 describe 'foreman::rake' do
-  let :default_facts do
-    {
-      :concat_basedir => '/tmp',
-      :interfaces     => '',
-    }
-  end
-
   let :pre_condition do
     "class { 'foreman':
       db_manage => false,
@@ -18,10 +11,8 @@ describe 'foreman::rake' do
 
   context 'on RedHat' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6.4',
-        :osfamily               => 'RedHat',
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 

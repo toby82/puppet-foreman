@@ -3,10 +3,7 @@ require 'spec_helper'
 describe 'foreman::plugin::tasks' do
   describe 'Fedora' do
     let :facts do
-      {
-          :osfamily => 'RedHat',
-          :operatingsystem => 'Fedora',
-      }
+      on_supported_os['fedora-19-x86_64']
     end
 
     it 'should call the plugin' do
@@ -17,10 +14,7 @@ describe 'foreman::plugin::tasks' do
 
   describe 'RHEL' do
     let :facts do
-      {
-          :osfamily => 'RedHat',
-          :operatingsystem => 'RedHat',
-      }
+      on_supported_os['redhat-6-x86_64']
     end
 
     it 'should call the plugin' do
@@ -31,9 +25,7 @@ describe 'foreman::plugin::tasks' do
 
   describe 'Debian' do
     let :facts do
-      {
-          :osfamily => 'Debian',
-      }
+      on_supported_os['debian-7-x86_64']
     end
 
     it 'should call the plugin' do

@@ -8,12 +8,9 @@ describe 'foreman::plugin' do
       'include foreman'
     end
 
-    let :facts do {
-      :concat_basedir         => '/nonexistant',
-      :operatingsystem        => 'RedHat',
-      :operatingsystemrelease => '6.4',
-      :osfamily               => 'RedHat',
-    } end
+    let :facts do
+      on_supported_os['redhat-6-x86_64']
+    end
 
     it 'should install the correct package' do
       should contain_package('ruby193-rubygem-foreman_myplugin').with_ensure('installed')
@@ -45,9 +42,9 @@ describe 'foreman::plugin' do
   end
 
   context 'when handling underscores on Debian' do
-    let :facts do {
-      :osfamily => 'Debian',
-    } end
+    let :facts do
+      on_supported_os['debian-7-x86_64']
+    end
 
     let :params do {
       :package => 'my_fun_plugin',
@@ -63,12 +60,9 @@ describe 'foreman::plugin' do
       'include foreman'
     end
 
-    let :facts do {
-      :concat_basedir         => '/nonexistant',
-      :operatingsystem        => 'Debian',
-      :operatingsystemrelease => '7.0',
-      :osfamily               => 'Debian',
-    } end
+    let :facts do
+      on_supported_os['debian-7-x86_64']
+    end
 
     let :params do {
       :config => 'the config content',

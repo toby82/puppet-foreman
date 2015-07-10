@@ -3,12 +3,9 @@ require 'spec_helper'
 describe 'foreman::puppetmaster' do
   context 'RedHat' do
     let :facts do
-      {
-        :fqdn                   => 'hostname.example.org',
-        :rubyversion            => '1.8.7',
-        :osfamily               => 'RedHat',
-        :operatingsystemrelease => '6.5',
-      }
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     describe 'without custom parameters' do
@@ -84,12 +81,9 @@ describe 'foreman::puppetmaster' do
 
   context 'RedHat 7.x' do
     let :facts do
-      {
-        :fqdn                   => 'hostname.example.org',
-        :rubyversion            => '2.0.0',
-        :osfamily               => 'RedHat',
-        :operatingsystemrelease => '7.0',
-      }
+      on_supported_os['redhat-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     describe 'without custom parameters' do
@@ -116,10 +110,9 @@ describe 'foreman::puppetmaster' do
 
   context 'Fedora' do
     let :facts do
-      {
-        :operatingsystem => 'Fedora',
-        :osfamily        => 'RedHat',
-      }
+      on_supported_os['fedora-19-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     describe 'without custom parameters' do
@@ -177,10 +170,9 @@ describe 'foreman::puppetmaster' do
 
   context 'Debian' do
     let :facts do
-      {
-        :operatingsystem => 'Debian',
-        :osfamily        => 'Debian',
-      }
+      on_supported_os['debian-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     describe 'without custom parameters' do

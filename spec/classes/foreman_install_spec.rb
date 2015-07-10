@@ -1,19 +1,10 @@
 require 'spec_helper'
 
 describe 'foreman::install' do
-  let :default_facts do
-    {
-      :concat_basedir => '/tmp',
-      :interfaces     => '',
-    }
-  end
-
   context 'RHEL' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6.4',
-        :osfamily               => 'RedHat',
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
@@ -95,11 +86,9 @@ describe 'foreman::install' do
 
     context 'with SELinux enabled' do
       let :facts do
-        default_facts.merge({
-          :operatingsystem        => 'RedHat',
-          :operatingsystemrelease => '6.4',
-          :osfamily               => 'RedHat',
-          :selinux                => 'true',
+        on_supported_os['redhat-6-x86_64'].merge({
+          :concat_basedir => '/tmp',
+          :selinux        => true,
         })
       end
 
@@ -133,11 +122,9 @@ describe 'foreman::install' do
 
     context 'with SELinux disabled' do
       let :facts do
-        default_facts.merge({
-          :operatingsystem        => 'RedHat',
-          :operatingsystemrelease => '6.4',
-          :osfamily               => 'RedHat',
-          :selinux                => 'false',
+        on_supported_os['redhat-6-x86_64'].merge({
+          :concat_basedir => '/tmp',
+          :selinux        => false,
         })
       end
 
@@ -171,10 +158,8 @@ describe 'foreman::install' do
 
   context 'CentOS' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'CentOS',
-        :operatingsystemrelease => '6.4',
-        :osfamily               => 'RedHat',
+      on_supported_os['centos-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
@@ -193,10 +178,8 @@ describe 'foreman::install' do
 
   context 'Fedora' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'Fedora',
-        :operatingsystemrelease => '19',
-        :osfamily               => 'RedHat',
+      on_supported_os['fedora-19-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
@@ -215,10 +198,8 @@ describe 'foreman::install' do
 
   context 'on debian' do
     let :facts do
-      default_facts.merge({
-        :operatingsystem        => 'Debian',
-        :operatingsystemrelease => 'wheezy',
-        :osfamily               => 'Debian',
+      on_supported_os['debian-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
@@ -300,12 +281,8 @@ describe 'foreman::install' do
 
   context 'on Ubuntu 12.04' do
     let :facts do
-      default_facts.merge({
-        :lsbdistid              => 'ubuntu',
-        :lsbdistcodename        => 'precise',
-        :operatingsystem        => 'Ubuntu',
-        :operatingsystemrelease => '12.04',
-        :osfamily               => 'Debian',
+      on_supported_os['ubuntu-12.04-x86_64'].merge({
+        :concat_basedir => '/tmp',
       })
     end
 
