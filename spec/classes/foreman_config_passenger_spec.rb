@@ -2,23 +2,23 @@ require 'spec_helper'
 
 
 describe 'foreman::config::passenger' do
+
   context 'on redhat' do
-    let :facts do {
-      :concat_basedir          => '/nonexistant',
-      :fqdn                    => 'foreman.example.org',
-      :operatingsystem         => 'RedHat',
-      :operatingsystemrelease  => '6.4',
-      :osfamily                => 'RedHat',
-    } end
+    let :facts do
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
+    end
 
     describe 'with minimal parameters' do
       let :params do {
-        :app_root => '/usr/share/foreman',
-        :ssl      => false,
-        :user     => 'foreman',
+        :app_root      => '/usr/share/foreman',
+        :ssl           => false,
+        :user          => 'foreman',
         :prestart      => true,
         :min_instances => '1',
         :start_timeout => '600',
+        :foreman_url   => "https://#{facts[:fqdn]}",
       } end
 
       it 'should include apache with modules' do
@@ -46,7 +46,8 @@ describe 'foreman::config::passenger' do
         :prestart      => true,
         :min_instances => '1',
         :start_timeout => '600',
-        :ruby          => '/usr/bin/ruby193-ruby'
+        :ruby          => '/usr/bin/ruby193-ruby',
+        :foreman_url   => "https://#{facts[:fqdn]}",
       } end
 
       it 'should contain the docroot' do
@@ -124,7 +125,8 @@ describe 'foreman::config::passenger' do
         :prestart      => true,
         :min_instances => '1',
         :start_timeout => '600',
-        :ruby          => '/usr/bin/ruby193-ruby'
+        :ruby          => '/usr/bin/ruby193-ruby',
+        :foreman_url   => "https://#{facts[:fqdn]}",
       } end
 
       it do
@@ -146,7 +148,8 @@ describe 'foreman::config::passenger' do
         :prestart      => true,
         :min_instances => '1',
         :start_timeout => '600',
-        :ruby          => '/usr/bin/ruby193-ruby'
+        :ruby          => '/usr/bin/ruby193-ruby',
+        :foreman_url   => "https://#{facts[:fqdn]}}",
       } end
 
       it do
@@ -157,14 +160,11 @@ describe 'foreman::config::passenger' do
   end
 
   context 'on debian' do
-    let :facts do {
-      :concat_basedir         => '/nonexistant',
-      :fqdn                   => 'foreman.example.org',
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Debian',
-      :operatingsystemrelease => 'squeeze',
-      :lsbdistcodename        => 'squeeze',
-    } end
+    let :facts do
+      on_supported_os['debian-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
+    end
 
     describe 'with vhost and ssl' do
       let :params do {
@@ -177,17 +177,18 @@ describe 'foreman::config::passenger' do
         :prestart      => false,
         :min_instances => Undef.new,
         :start_timeout => Undef.new,
+        :foreman_url   => "https://#{facts[:fqdn]}",
       } end
 
-      it 'should not include a pre-start https on Squeeze' do
+      it 'should not include a pre-start https on Debian' do
         should contain_apache__vhost('foreman-ssl').without_passenger_pre_start
       end
 
-      it 'should not include min instances on Squeeze' do
+      it 'should not include min instances on Debian' do
         should contain_apache__vhost('foreman-ssl').without_passenger_min_instances
       end
 
-      it 'should not include start timeout on Squeeze' do
+      it 'should not include start timeout on Debian' do
         should contain_apache__vhost('foreman-ssl').without_passenger_start_timeout
       end
 
