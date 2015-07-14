@@ -9,7 +9,9 @@ describe 'foreman::plugin' do
     end
 
     let :facts do
-      on_supported_os['redhat-6-x86_64']
+      on_supported_os['redhat-6-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     it 'should install the correct package' do
@@ -61,7 +63,9 @@ describe 'foreman::plugin' do
     end
 
     let :facts do
-      on_supported_os['debian-7-x86_64']
+      on_supported_os['debian-7-x86_64'].merge({
+        :concat_basedir => '/tmp',
+      })
     end
 
     let :params do {
